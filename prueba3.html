@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REGALOS YOANDRY</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: url('imagen.jpg') no-repeat center center fixed;
+      background-size: cover;
+      overflow: hidden;
+    }
+
+    .container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      flex-direction: column;
+    }
+
+    .page {
+      position: absolute;
+      width: 90%;
+      max-width: 400px;
+      height: auto;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transform: translateX(100%);
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .page.active {
+      transform: translateX(0);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin: 20px 0;
+      color: white;
+      text-shadow: 0 0 10px orange;
+      text-align: center;
+    }
+
+    h1 input[type="checkbox"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(45deg, gold, white);
+      border: 2px solid gold;
+      border-radius: 5px;
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+    }
+
+    h1 input[type="checkbox"]:checked {
+      background: linear-gradient(45deg, orange, gold);
+      box-shadow: 0 0 10px gold;
+    }
+
+    h1 input[type="checkbox"]:checked::after {
+      content: '\2714';
+      color: white;
+      font-size: 1rem;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 1rem;
+      border: none;
+      background: linear-gradient(45deg, gold, orange);
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 0 0 10px gold;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px orange;
+    }
+
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      box-shadow: none;
+      opacity: 0.6;
+    }
+
+    .title {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+      text-shadow: 0 0 10px orange;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        height: auto;
+      }
+
+      .page {
+        width: 90%;
+        padding: 15px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      button {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+      }
+
+      .title {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="title">ORDEN REGALOS</div>
+  <div class="container" id="container">
+    <div class="page" id="page-1">
+      <h1><input type="checkbox" id="check-1">1</h1>
+      <button id="next-1" disabled>Abierto</button>
+    </div>
+
+    <div class="page" id="page-2">
+      <h1><input type="checkbox" id="check-2">3</h1>
+      <button id="next-2" disabled>Abierto</button>
+    </div>
+
+    <div class="page" id="page-3">
+      <h1><input type="checkbox" id="check-3">5</h1>
+      <button id="next-3" disabled>Abierto</button>
+    </div>
+
+    <div class="page" id="page-4">
+      <h1><input type="checkbox" id="check-4">2</h1>
+      <button id="next-4" disabled>Abierto</button>
+    </div>
+
+    <div class="page" id="page-5">
+      <h1><input type="checkbox" id="check-5">4</h1>
+      <button id="finish">YA NO HAY MÁS :(</button>
+    </div>
+  </div>
+
+  <script>
+    const pages = document.querySelectorAll('.page');
+    const container = document.getElementById('container');
+
+    pages.forEach((page, index) => {
+      const check = page.querySelector('input[type="checkbox"]');
+      const nextButton = page.querySelector('button');
+
+      check.addEventListener('change', () => {
+        nextButton.disabled = !check.checked;
+      });
+
+      nextButton.addEventListener('click', () => {
+        page.classList.remove('active');
+        if (pages[index + 1]) {
+          pages[index + 1].classList.add('active');
+        }
+      });
+    });
+
+    // Initialize first page as active
+    pages[0].classList.add('active');
+
+    // Final page action
+    const finishButton = document.getElementById('finish');
+    finishButton.addEventListener('click', () => {
+      alert('¡SE HAN ACABADO LOS REGALOS!');
+    });
+  </script>
+</body>
+</html>
